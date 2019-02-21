@@ -2,8 +2,6 @@ package com.lkk.everything.core.model;
 
 import lombok.Data;
 
-import java.security.PrivateKey;
-
 /**
  * 文件属性信息索引之后的记录Thing表示
  */

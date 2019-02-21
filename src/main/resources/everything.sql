@@ -8,3 +8,6 @@ create table if not exists file_index(
   depth int not null comment '文件路径深度',
   file_type varchar(32) not null comment '文件类型'
 );
+
+-- insert into file_index(name, path, depth, file_type) values (?,?,?,?)
+-- insert into file_index(name, path, depth, file_type) values ('简历.ppt','D:\\a\\test\\简历.ppt',3,'DOC');

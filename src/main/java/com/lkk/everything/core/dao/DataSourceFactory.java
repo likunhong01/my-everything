@@ -72,7 +72,7 @@ public class DataSourceFactory {
         }
     }
 
-    public static void main(String[] args) {
-        DataSourceFactory.initDatabase();
-    }
+//    public static void main(String[] args) {
+//        DataSourceFactory.initDatabase();
+//    }
 }

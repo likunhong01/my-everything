@@ -1,0 +1,57 @@
+2019-02-21 12:57:33 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 12:57:33 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+select name, path, depth, file_type from file_index [42102-197]
+2019-02-21 13:10:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+select name, path, depth, file_type from file_index [42102-197]
+2019-02-21 13:11:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+select name, path, depth, file_type from file_index [42102-197]
+2019-02-21 13:56:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+select name, path, depth, file_type from file_index [42102-197]
+2019-02-21 14:36:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 14:36:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+select name, path, depth, file_type from file_index [42102-197]
+2019-02-21 14:46:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 14:46:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+select name, path, depth, file_type from file_index [42102-197]
+2019-02-21 14:54:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 14:54:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+select name, path, depth, file_type from file_index [42102-197]
+2019-02-21 15:23:25 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 15:23:25 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+select name, path, depth, file_type from file_index [42102-197]
+2019-02-21 15:29:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 15:29:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+select name, path, depth, file_type from file_index [42102-197]
+2019-02-21 15:38:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 15:40:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 15:47:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 15:48:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
