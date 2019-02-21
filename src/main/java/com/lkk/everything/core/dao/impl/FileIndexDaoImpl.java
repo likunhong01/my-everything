@@ -58,7 +58,7 @@ public class FileIndexDaoImpl implements FileIndexDao {
             // 1.建立连接
             connection = dataSource.getConnection();
             // 2.准备sql语句
-            String sql = "select name, path, depth, file_type from file_index";
+//            String sql = "select name, path, depth, file_type from file_index";
 
 
             // 做条件查询
@@ -66,31 +66,31 @@ public class FileIndexDaoImpl implements FileIndexDao {
             // fileType: =
             // limit：limit offset
             // orderbyAsc：order by
-//            StringBuilder sqlBuilder = new StringBuilder();
-//            sqlBuilder.append("select name, path, depth, file_type from file_index");
-//            // name匹配：前模糊，后模糊，前后模糊
-//            sqlBuilder.append(" where")
-//                    .append(" name like '%")
-//                    .append(condition.getName())
-//                    .append("%'");
-//            // 文件类型
-//            if (condition.getFileType() != null){
-//                sqlBuilder.append(" and file_type = '")
-//                        .append(condition.getFileType().toUpperCase())
-//                        .append("' ");
-//            }
-//            // orderby
-//            sqlBuilder.append(" order by depth ")
-//                    .append(condition.getOrederByAsc() ? "asc" : "desc");
-//            // limit
-//            sqlBuilder.append(" limit ")
-//                    .append(condition.getLimit())
-//                    .append(" offset 0");
-//
-//            System.out.println(sqlBuilder);
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("select name, path, depth, file_type from file_index");
+            // name匹配：前模糊，后模糊，前后模糊
+            sqlBuilder.append(" where")
+                    .append(" name like '%")
+                    .append(condition.getName())
+                    .append("%'");
+            // 文件类型
+            if (condition.getFileType() != null){
+                sqlBuilder.append(" and file_type = '")
+                        .append(condition.getFileType().toUpperCase())
+                        .append("' ");
+            }
+            // orderby
+            sqlBuilder.append(" order by depth ")
+                    .append(condition.getOrederByAsc() ? "asc" : "desc");
+            // limit
+            sqlBuilder.append(" limit ")
+                    .append(condition.getLimit())
+                    .append(" offset 0");
+
+            System.out.println(sqlBuilder);
 
             // 3.准备命令
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sqlBuilder.toString());
             // 4.执行命令
             resultSet = statement.executeQuery();
             while (resultSet.next()){
@@ -99,7 +99,7 @@ public class FileIndexDaoImpl implements FileIndexDao {
                 thing.setName(resultSet.getString("name"));
                 thing.setPath(resultSet.getString("path"));
                 thing.setDepth(resultSet.getInt("depth"));
-                thing.setFileType(FileType.lookupByName(resultSet.getString("file_tyle")));
+                thing.setFileType(FileType.lookupByName(resultSet.getString("file_type")));
                 things.add(thing);
             }
         } catch (SQLException e) {
@@ -144,25 +144,25 @@ public class FileIndexDaoImpl implements FileIndexDao {
 
 
         FileIndexDao fileIndexDao = new FileIndexDaoImpl(DataSourceFactory.dataSource());
-        DataSourceFactory.initDatabase();
+//        DataSourceFactory.initDatabase();
 
         Thing thing = new Thing();
         thing.setName("简历2.ppt");
         thing.setPath("D:\\a\\test\\简历2.ppt");
-        thing.setDepth(3);
+        thing.setDepth(2);
         thing.setFileType(FileType.DOC);
 
         fileIndexDao.insert(thing);
 
 
-//        Condition condition = new Condition();
-//        condition.setName("简历");
-//        condition.setLimit(1);
-//        condition.setOrederByAsc(true);
-//
-//        List<Thing> things = fileIndexDao.search(new Condition());
-//        for(Thing t : things){
-//            System.out.println(t);
-//        }
+        Condition condition = new Condition();
+        condition.setName("简历");
+        condition.setLimit(1);
+        condition.setOrederByAsc(true);
+
+        List<Thing> things = fileIndexDao.search(condition);
+        for(Thing t : things){
+            System.out.println(t);
+        }
     }
 }

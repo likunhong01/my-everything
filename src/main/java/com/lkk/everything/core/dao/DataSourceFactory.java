@@ -46,7 +46,7 @@ public class DataSourceFactory {
             try(BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
                 String line = null;
                 while ((line = reader.readLine()) != null){
-                    if (line.startsWith("--")){
+                    if (!line.startsWith("--")){
                         sqlString.append(line);
                     }
                 }

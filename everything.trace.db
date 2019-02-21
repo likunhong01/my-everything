@@ -55,3 +55,17 @@ insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197
 2019-02-21 15:48:48 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
 insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 15:59:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FILE_INDEX" not found; SQL statement:
+insert into file_index(name, path, depth, file_type) values (?,?,?,?) [42102-197]
+2019-02-21 16:17:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "file_tyle" not found [42122-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.jdbc.JdbcResultSet.getColumnIndex(JdbcResultSet.java:3148)
+	at org.h2.jdbc.JdbcResultSet.get(JdbcResultSet.java:3247)
+	at org.h2.jdbc.JdbcResultSet.getString(JdbcResultSet.java:310)
+	at com.alibaba.druid.pool.DruidPooledResultSet.getString(DruidPooledResultSet.java:257)
+	at com.lkk.everything.core.dao.impl.FileIndexDaoImpl.search(FileIndexDaoImpl.java:103)
+	at com.lkk.everything.core.dao.impl.FileIndexDaoImpl.main(FileIndexDaoImpl.java:164)
