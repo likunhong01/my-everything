@@ -2,6 +2,7 @@ package com.lkk.everything.config;
 
 import lombok.Getter;
 
+import java.io.File;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -9,6 +10,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
+/**
+ * 只提供getter
+ */
 @Getter
 public class EverythingConfig {
 
@@ -24,9 +28,37 @@ public class EverythingConfig {
      */
     private Set<String> excludePath = new HashSet<>();
 
+    //TODO 可配置的参数会在这里体现
+
+    /**
+     * H2数据库文件路径
+     */
+    private String h2IndexPath = System.getProperty("user.dir") + File.separator + "everything";
 
     private EverythingConfig(){
+    }
 
+    private void initDefaultPathsConfig(){
+        //获取文件系统
+        FileSystem fileSystem = FileSystems.getDefault();
+        // 遍历的目录
+        Iterable<Path> iterable = fileSystem.getRootDirectories();
+        iterable.forEach(path -> config.includePath.add(path.toString()));
+
+
+        // 排除的目录
+        // windows:C:\Windows C:\Program files(x86) C:\Program files C:\ProgramData
+        if (System.getProperty("os.name").startsWith("Windows")){
+            config.getExcludePath().add("C:\\Windows");
+            config.getExcludePath().add("C:\\Program files(x86)");
+            config.getExcludePath().add("C:\\Program files");
+            config.getExcludePath().add("C:\\ProgramData");
+        }
+        else {
+            config.getExcludePath().add("/tmp");
+            config.getExcludePath().add("/etc");
+            config.getExcludePath().add("/root");
+        }
     }
 
     public static EverythingConfig getInstance(){
@@ -34,27 +66,7 @@ public class EverythingConfig {
             synchronized (EverythingConfig.class){
                 if (config == null){
                     config = new EverythingConfig();    // 单例
-
-                    //获取文件系统
-                    FileSystem fileSystem = FileSystems.getDefault();
-                    // 遍历的目录
-                    Iterable<Path> iterable = fileSystem.getRootDirectories();
-                    iterable.forEach(path -> config.includePath.add(path.toString()));
-
-
-                    // 排除的目录
-                    // windows:C:\Windows C:\Program files(x86) C:\Program files C:\ProgramData
-                    if (System.getProperty("os.name").startsWith("Windows")){
-                        config.getExcludePath().add("C:\\Windows");
-                        config.getExcludePath().add("C:\\Program files(x86)");
-                        config.getExcludePath().add("C:\\Program files");
-                        config.getExcludePath().add("C:\\ProgramData");
-                    }
-                    else {
-                        config.getExcludePath().add("/tmp");
-                        config.getExcludePath().add("/etc");
-                        config.getExcludePath().add("/root");
-                    }
+                    config.initDefaultPathsConfig();
                 }
             }
         }

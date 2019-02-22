@@ -29,12 +29,10 @@ public final class FileConverThing {
             String extend = file.getName().substring(index + 1);
             return FileType.lookup(extend);
         }else return FileType.OTHER;
-
     }
+
     public static int computeFileDepth(File file){
-        int dept = 0;
         String[] segments = file.getAbsolutePath().split("\\\\");
-        dept = segments.length;
-        return dept;
+        return segments.length;
     }
 }

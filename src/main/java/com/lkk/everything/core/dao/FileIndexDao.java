@@ -18,6 +18,12 @@ public interface FileIndexDao {
     void insert(Thing thing);
 
     /**
+     * 删除thing
+     * @param thing
+     */
+    void delete(Thing thing);
+
+    /**
      * 检索
      * @param condition
      * @return

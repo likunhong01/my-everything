@@ -16,5 +16,5 @@ public class Condition {
      * true——asc
      * false——desc
      */
-    private Boolean orederByAsc;
+    private Boolean orderByAsc;
 }

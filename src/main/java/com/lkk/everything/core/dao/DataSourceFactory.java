@@ -1,6 +1,7 @@
 package com.lkk.everything.core.dao;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.lkk.everything.config.EverythingConfig;
 
 
 import javax.sql.DataSource;
@@ -25,7 +26,7 @@ public class DataSourceFactory {
                     // 采用的是h2的嵌入式数据库，数据库以本地文件的方式存储，只需要提供url接口
                     // 获取当前工程路径
                     String workDir = System.getProperty("user.dir");
-                    dataSource.setUrl("jdbc:h2:" + workDir + File.separator + "everything");
+                    dataSource.setUrl("jdbc:h2:" + EverythingConfig.getInstance().getH2IndexPath());
                 }
             }
         }

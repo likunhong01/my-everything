@@ -1,18 +1,11 @@
-package com.lkk.everything.index.impl;
+package com.lkk.everything.core.index.impl;
 
 import com.lkk.everything.config.EverythingConfig;
-import com.lkk.everything.core.dao.DataSourceFactory;
-import com.lkk.everything.core.dao.impl.FileIndexDaoImpl;
 import com.lkk.everything.core.interceptor.FileInterceptor;
-import com.lkk.everything.core.interceptor.impl.FileIndexInterceptor;
-import com.lkk.everything.core.interceptor.impl.FilePrintInterceptor;
-import com.lkk.everything.core.model.Thing;
-import com.lkk.everything.index.FileScan;
+import com.lkk.everything.core.index.FileScan;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class FileScanImpl implements FileScan {
 

@@ -72,6 +72,27 @@
                 <version>3.6.1</version>
             </plugin>
 
+            <!--依赖管理插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!--打包插件-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -81,6 +102,8 @@
                     <archive>
                         <manifest>
                             <!--配置主类-->
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib</classpathPrefix>
                             <mainClass>com.lkk.everything.cmd.EverythingCmdApp</mainClass>
                         </manifest>
                     </archive>

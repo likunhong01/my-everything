@@ -30,6 +30,29 @@ public class FileIndexDaoImpl implements FileIndexDao {
             // 1.建立连接
             connection = dataSource.getConnection();
             // 2.准备sql语句
+            String sql = "delete from file_index where PATH like '" + thing.getPath() +"%'";
+            // 3.准备命令
+            statement = connection.prepareStatement(sql);
+            // 4.设置参数1234
+            statement.setString(1,thing.getPath());
+            // 5.执行命令
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            releaseResource(null, statement, connection);
+        }
+    }
+
+    @Override
+    public void delete(Thing thing) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            // 1.建立连接
+            connection = dataSource.getConnection();
+            // 2.准备sql语句
             String sql = "insert into file_index(name, path, depth, file_type) values (?,?,?,?)";
             // 3.准备命令
             statement = connection.prepareStatement(sql);
@@ -79,15 +102,28 @@ public class FileIndexDaoImpl implements FileIndexDao {
                         .append(condition.getFileType().toUpperCase())
                         .append("' ");
             }
-            // orderby
-            sqlBuilder.append(" order by depth ")
-                    .append(condition.getOrederByAsc() ? "asc" : "desc");
-            // limit
-            sqlBuilder.append(" limit ")
-                    .append(condition.getLimit())
-                    .append(" offset 0");
+            // limit order必选
+            if (condition.getOrderByAsc() != null) {
 
-            System.out.println(sqlBuilder);
+                sqlBuilder.append(" order by depth ")
+                        .append(condition.getOrderByAsc() ? "asc" : "desc");
+            }
+            if (condition.getLimit() != null) {
+                sqlBuilder.append(" limit ")
+                        .append(condition.getLimit())
+                        .append(" offset 0 ");
+            }
+
+
+//            // orderby
+//            sqlBuilder.append(" order by depth ")
+//                    .append(condition.getOrederByAsc() ? "asc" : "desc");
+//            // limit
+//            sqlBuilder.append(" limit ")
+//                    .append(condition.getLimit())
+//                    .append(" offset 0");
+
+//            System.out.println(sqlBuilder);
 
             // 3.准备命令
             statement = connection.prepareStatement(sqlBuilder.toString());
@@ -140,29 +176,32 @@ public class FileIndexDaoImpl implements FileIndexDao {
 
 
 
-    public static void main(String[] args) throws SQLException {
-
-
-        FileIndexDao fileIndexDao = new FileIndexDaoImpl(DataSourceFactory.dataSource());
-//        DataSourceFactory.initDatabase();
-
-        Thing thing = new Thing();
-        thing.setName("简历2.ppt");
-        thing.setPath("D:\\a\\test\\简历2.ppt");
-        thing.setDepth(2);
-        thing.setFileType(FileType.DOC);
-
-        fileIndexDao.insert(thing);
-
-
-        Condition condition = new Condition();
-        condition.setName("简历");
-        condition.setLimit(1);
-        condition.setOrederByAsc(true);
-
-        List<Thing> things = fileIndexDao.search(condition);
-        for(Thing t : things){
-            System.out.println(t);
-        }
-    }
+//    public static void main(String[] args) throws SQLException {
+//
+//
+//        FileIndexDao fileIndexDao = new FileIndexDaoImpl(DataSourceFactory.dataSource());
+////        DataSourceFactory.initDatabase();
+//
+////        Thing thing = new Thing();
+////        thing.setName("简历2.ppt");
+////        thing.setPath("D:\\a\\test\\简历2.ppt");
+////        thing.setDepth(2);
+////        thing.setFileType(FileType.DOC);
+////
+////        fileIndexDao.insert(thing);
+//
+//
+//        Condition condition = new Condition();
+//        condition.setName("");
+//        condition.setLimit(10000);
+//        condition.setOrderByAsc(true);
+//
+//        List<Thing> things = fileIndexDao.search(condition);
+//        int count = 0;
+//        for(Thing t : things){
+//            System.out.println(t);
+//            count++;
+//        }
+//        System.out.println(count);
+//    }
 }
