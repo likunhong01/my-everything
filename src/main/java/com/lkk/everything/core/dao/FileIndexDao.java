@@ -29,4 +29,5 @@ public interface FileIndexDao {
      * @return
      */
     List<Thing> search(Condition condition);
+
 }

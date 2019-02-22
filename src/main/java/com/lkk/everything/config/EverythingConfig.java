@@ -1,6 +1,8 @@
 package com.lkk.everything.config;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
 import java.nio.file.FileSystem;
@@ -10,9 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
-/**
- * 只提供getter
- */
+
 @Getter
 public class EverythingConfig {
 
@@ -29,6 +29,17 @@ public class EverythingConfig {
     private Set<String> excludePath = new HashSet<>();
 
     //TODO 可配置的参数会在这里体现
+    /**
+     * 检索返回的最大值
+     */
+    @Setter
+    private Integer maxReturn = 30;
+
+    /**
+     * 默认排序规则按深度的升序
+     */
+    @Setter
+    private Boolean depthOrderAsc = true;
 
     /**
      * H2数据库文件路径
@@ -39,12 +50,13 @@ public class EverythingConfig {
     }
 
     private void initDefaultPathsConfig(){
-        //获取文件系统
-        FileSystem fileSystem = FileSystems.getDefault();
-        // 遍历的目录
-        Iterable<Path> iterable = fileSystem.getRootDirectories();
-        iterable.forEach(path -> config.includePath.add(path.toString()));
-
+        // 最后再打开，先用一个文件夹测试
+//        //获取文件系统
+//        FileSystem fileSystem = FileSystems.getDefault();
+//        // 遍历的目录
+//        Iterable<Path> iterable = fileSystem.getRootDirectories();
+//        iterable.forEach(path -> config.includePath.add(path.toString()));
+        config.includePath.add("C:\\文件\\科协相关资料");
 
         // 排除的目录
         // windows:C:\Windows C:\Program files(x86) C:\Program files C:\ProgramData

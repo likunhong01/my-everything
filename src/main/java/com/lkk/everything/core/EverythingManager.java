@@ -16,6 +16,7 @@ import com.lkk.everything.core.index.impl.FileScanImpl;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -76,6 +77,10 @@ public class EverythingManager {
         this.backgroundClearThread.setDaemon(true);
     }
 
+
+    /**
+     * 有bug，要在第一次进入初始化
+     */
     private void checkDatabase() {
 
         String filename = EverythingConfig.getInstance().getH2IndexPath() + ".mv.db";
@@ -83,6 +88,8 @@ public class EverythingManager {
         if (!dbFile.exists()){
             DataSourceFactory.initDatabase();
         }
+
+
     }
 
     public EverythingManager(FileSearch fileSearch, FileScan fileScan) {
@@ -126,11 +133,14 @@ public class EverythingManager {
      * 索引
      */
     public void buildIndex(){
+        // 初始化数据库
+        DataSourceFactory.initDatabase();
+
         Set<String> directories = EverythingConfig.getInstance().getIncludePath();
         if (this.executorService == null){
             this.executorService = Executors.newFixedThreadPool(directories.size(),
                     new ThreadFactory() {
-                private final AtomicInteger threadId = new AtomicInteger(0);
+                private final AtomicInteger threadId = new AtomicInteger(3);
                         @Override
                         public Thread newThread(Runnable r) {
                             Thread thread = new Thread(r);

@@ -1,9 +1,11 @@
 package com.lkk.everything.cmd;
 
+import com.lkk.everything.config.EverythingConfig;
 import com.lkk.everything.core.EverythingManager;
 import com.lkk.everything.core.model.Condition;
 import com.lkk.everything.core.model.Thing;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +14,10 @@ public class EverythingCmdApp {
 
     public static void main(String[] args) {
         System.out.println("这是everything应用程序的命令行交互程序");
+
+        // 解析用户参数
+        parseParams(args);
+
         //欢迎
         welcome();
 
@@ -23,6 +29,63 @@ public class EverythingCmdApp {
 
         //交互式
         interactive(manager);
+    }
+
+    private static void parseParams(String[] args) {
+
+        EverythingConfig config = EverythingConfig.getInstance();
+
+        for (String param : args) {
+            String maxReturnParam = "--maxReturn=";
+            if (param.startsWith(maxReturnParam)){
+                // 设置maxReturn，如果用户指定格式不对，使用默认值，不处理
+                int index  = param.indexOf("=");
+                if (param.length() > param.substring(0,index+1).length()){
+                    String maxReturn = param.substring( index + 1);
+                    config.setMaxReturn(Integer.parseInt(maxReturn));
+                }
+
+            }
+
+            String depthOrderByAscParam = "--depthOrderByAsc=";
+            if (param.startsWith(depthOrderByAscParam)){
+                // 设置depthOrderByAsc
+                int index  = param.indexOf("=");
+                if (param.length() > param.substring(0,index+1).length()){
+                    String OrderByDepth = param.substring( index + 1);
+                    config.setDepthOrderAsc(Boolean.parseBoolean(OrderByDepth));
+                }
+            }
+
+            String includePathParam = "--includePath=";
+            if (param.startsWith(includePathParam)){
+                // 设置includePath
+                int index  = param.indexOf("=");
+                if (param.length() > param.substring(0,index+1).length()){
+                    String includepathStr = param.substring( index + 1);
+                    String[] includePaths = includePathParam.split(";");
+//                    EverythingConfig.getInstance().setIncludePath(new HashSet<>());
+                    config.getIncludePath().clear();
+                    for (String s: includePaths){
+                        config.getIncludePath().add(s);
+                    }
+                }
+            }
+
+            String excludePathParam = "--excludePath=";
+            if (param.startsWith("--excludePath=")){
+                // 设置excludePath
+                int index  = param.indexOf("=");
+                if (param.length() > param.substring(0,index+1).length()){
+                    String excludePathStr = param.substring( index + 1);
+                    String[] excludePaths = excludePathStr.split(";");
+                    config.getExcludePath().clear();
+                    for (String s: excludePaths){
+                        config.getExcludePath().add(s);
+                    }
+                }
+            }
+        }
     }
 
     private static void interactive(EverythingManager manager) {
@@ -73,6 +136,8 @@ public class EverythingCmdApp {
 //        //统一调度器中的search
 //        //name fileType limit orderByAsc
 //        manager.search(condition);
+        condition.setLimit(EverythingConfig.getInstance().getMaxReturn());
+        condition.setOrderByAsc(EverythingConfig.getInstance().getDepthOrderAsc());
         List<Thing> thingList = manager.search(condition);
         for (Thing thing: thingList){
             System.out.println(thing.getPath());

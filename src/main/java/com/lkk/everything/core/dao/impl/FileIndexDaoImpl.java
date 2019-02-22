@@ -7,6 +7,9 @@ import com.lkk.everything.core.model.FileType;
 import com.lkk.everything.core.model.Thing;
 
 import javax.sql.DataSource;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +25,7 @@ public class FileIndexDaoImpl implements FileIndexDao {
     }
 
     @Override
-    public void insert(Thing thing){
+    public void delete(Thing thing){
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -45,7 +48,7 @@ public class FileIndexDaoImpl implements FileIndexDao {
     }
 
     @Override
-    public void delete(Thing thing) {
+    public void insert(Thing thing) {
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -175,6 +178,11 @@ public class FileIndexDaoImpl implements FileIndexDao {
     }
 
 
+    public static void main(String[] args) {
+//        DataSourceFactory.initDatabase();
+//        new FileIndexDaoImpl(DataSourceFactory.dataSource()).search(new Condition());
+
+    }
 
 //    public static void main(String[] args) throws SQLException {
 //

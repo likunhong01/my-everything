@@ -27,6 +27,10 @@ public class DataSourceFactory {
                     // 获取当前工程路径
                     String workDir = System.getProperty("user.dir");
                     dataSource.setUrl("jdbc:h2:" + EverythingConfig.getInstance().getH2IndexPath());
+
+                    // Druip数据库连接池的可配置参数
+                    dataSource.setValidationQuery("select now()");
+//                    dataSource.setTestWhileIdle(false);
                 }
             }
         }
