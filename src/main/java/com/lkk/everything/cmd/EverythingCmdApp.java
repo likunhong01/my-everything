@@ -27,6 +27,9 @@ public class EverythingCmdApp {
         // 启动后台清理线程
         manager.startBackgroundClearThread();
 
+        // 启动监控
+        manager.startFileSystemMonitor();
+
         //交互式
         interactive(manager);
     }
@@ -161,7 +164,7 @@ public class EverythingCmdApp {
     }
 
     private static void welcome() {
-        System.out.println("欢迎使用，Everything Plus");
+        System.out.println("欢迎使用Everything");
     }
 
     private static void help() {

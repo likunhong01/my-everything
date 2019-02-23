@@ -11,3 +11,6 @@ create table if not exists file_index(
 
 -- insert into file_index(name, path, depth, file_type) values (?,?,?,?)
 -- insert into file_index(name, path, depth, file_type) values ('简历.ppt','D:\\a\\test\\简历.ppt',3,'DOC');
+
+-- 简历索引优化
+-- create index file_name on file_index(name);

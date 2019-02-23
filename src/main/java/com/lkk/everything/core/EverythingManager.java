@@ -1,6 +1,7 @@
 package com.lkk.everything.core;
 
 import com.lkk.everything.config.EverythingConfig;
+import com.lkk.everything.core.common.HandlePath;
 import com.lkk.everything.core.dao.DataSourceFactory;
 import com.lkk.everything.core.dao.FileIndexDao;
 import com.lkk.everything.core.dao.impl.FileIndexDaoImpl;
@@ -9,6 +10,8 @@ import com.lkk.everything.core.interceptor.impl.FileIndexInterceptor;
 import com.lkk.everything.core.interceptor.impl.ThingClearInterceptor;
 import com.lkk.everything.core.model.Condition;
 import com.lkk.everything.core.model.Thing;
+import com.lkk.everything.core.monitor.FileWatch;
+import com.lkk.everything.core.monitor.impl.FileWatchImpl;
 import com.lkk.everything.core.search.FileSearch;
 import com.lkk.everything.core.search.impl.FileSearchImpl;
 import com.lkk.everything.core.index.FileScan;
@@ -43,6 +46,15 @@ public class EverythingManager {
 
     private AtomicBoolean backgroundClearThreadStatus = new AtomicBoolean(false);
 
+
+    /**
+     * 文件监控
+     */
+    private FileWatch fileWatch;
+
+
+
+
     private EverythingManager(){
         this.initComponent();
     }
@@ -75,6 +87,10 @@ public class EverythingManager {
         this.backgroundClearThread = new Thread(this.thingClearInterceptor);
         this.backgroundClearThread.setName("Thread Thing Clear");
         this.backgroundClearThread.setDaemon(true);
+
+
+        // 文件监控对象
+        this.fileWatch = new FileWatchImpl(fileIndexDao);
     }
 
 
@@ -82,12 +98,12 @@ public class EverythingManager {
      * 有bug，要在第一次进入初始化
      */
     private void checkDatabase() {
-
-        String filename = EverythingConfig.getInstance().getH2IndexPath() + ".mv.db";
-        File dbFile = new File(filename);
-        if (!dbFile.exists()){
-            DataSourceFactory.initDatabase();
-        }
+        DataSourceFactory.initDatabase();
+//        String filename = EverythingConfig.getInstance().getH2IndexPath() + ".mv.db";
+//        File dbFile = new File(filename);
+//        if (!dbFile.exists()){
+//            DataSourceFactory.initDatabase();
+//        }
 
 
     }
@@ -202,5 +218,24 @@ public class EverythingManager {
             System.out.println("不能重复启动清理线程");
         }
 
+    }
+
+    /**
+     * 启动文件系统监听
+     */
+    public void startFileSystemMonitor(){
+        EverythingConfig config = EverythingConfig.getInstance();
+        HandlePath handlePath = new HandlePath();
+        handlePath.setIncludePath(config.getIncludePath());
+        handlePath.setExcludePath(config.getExcludePath());
+
+        this.fileWatch.monitor(handlePath);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                fileWatch.start();
+            }
+        });
     }
 }
